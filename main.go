@@ -14,7 +14,7 @@ var (
 
 func main() {
 
-	log.Println("pushgatewayclear version 1.00 build21.03.20.10")
+	log.Println("pushgatewayclear version 1.00 build21.03.20.11")
 
 	flag.Parse()
 

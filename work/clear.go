@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
 	"strings"
 	"time"
 )
@@ -20,7 +19,7 @@ func Work(baseUrl string, ttl time.Duration) {
 		log.Println("begin clear work...")
 		clear(baseUrl, ttl);
 		log.Println("end clear work")
-		time.Sleep(time.Minute * 5)
+		time.Sleep(time.Minute * 1)
 
 	}
 }
@@ -64,9 +63,10 @@ func clear(baseUrl string, ttl time.Duration) error {
 		if !ok {
 			continue
 		}
+
 		//http://xxx/metrics/job@base64/5LqR5Y2X5a6d5Y2O5bCP5a2m
 		deleteUrl := fmt.Sprintf("%s/metrics/job@base64/%s", baseUrl,
-			base64.StdEncoding.EncodeToString([]byte(job)))
+			base64.RawURLEncoding.EncodeToString([]byte(job)))
 
 		for k, v := range m.PushTimeSeconds.Metrics[0].Labels {
 			if k != "" && v != "" && k != "job" {
@@ -86,7 +86,7 @@ func clear(baseUrl string, ttl time.Duration) error {
 
 func delete(deleteUrl string) error {
 
-	deleteUrl = url.QueryEscape(deleteUrl)
+	//deleteUrl = url.QueryEscape(deleteUrl)
 	//fmt.Println(deleteUrl)
 
 	client := &http.Client{}
