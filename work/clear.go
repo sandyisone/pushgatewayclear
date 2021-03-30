@@ -74,7 +74,8 @@ func clear(baseUrl string, ttl time.Duration) error {
 			}
 		}
 
-		if delete(deleteUrl) == nil {
+		err = delete(deleteUrl);
+		if err != nil {
 			log.Printf("delete job: %s (%s) error: %s ", job, deleteUrl, err.Error())
 		}else{
 			log.Printf("delete job: %s (%s) ", job, deleteUrl)
